@@ -55,6 +55,18 @@ cp wordpress/wp-config-sample.php wp-config.php
 git add wp-config.php
 git commit -m "Adding default wp-config.php file"
 
+echo "** Configuring .htaccess file"
+cd wordpress
+touch .htaccess
+cat <<EOF > .htaccess
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /onepress/wordpress/
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+EOF
+
 echo "** Setting up wp-content directory"
 cp -R wordpress/wp-content .
 git add wp-content
